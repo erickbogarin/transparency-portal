@@ -1,0 +1,39 @@
+header {
+	background-image: url('../img/topo.png');
+	height: 168px;
+	background-repeat: no-repeat;
+}
+
+header img {
+	width: 400px;
+	height: 134.563px;
+	margin-top: 15px;
+	margin-left: 170px;
+}
+
+main {
+	padding: 0px 150px;	
+	background-image: url('../img/fundo.png');
+}
+
+@media only screen and (max-width: 700px) {
+	main {
+		padding: 0px 0px;
+	}
+	nav {
+		display: none;
+	}	
+}
+
+footer {
+	background-image: url('../img/topo.png');
+	background-repeat: no-repeat;
+	height: 80px;
+
+	-moz-transform: scaleX(-1);
+	-o-transform: scaleX(-1);
+	-webkit-transform: scaleX(-1);
+	transform: scaleX(-1);
+	filter: FlipH;
+	-ms-filter: "FlipH";
+}
