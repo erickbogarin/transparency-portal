@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-BR">
 <head>
 	<meta charset="utf-8">
-	<title>Portal Tranparencia</title>
-	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+	<title>Portal Tranparencia - @yield('title')</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 </head>
 <body>
-	<header role="banner">
+	<header id="branding" role="banner">
 		<a href="">
 			<img id="banner" src="/img/mapa-ptm2.png" alt="Portal Transparencia">
 		</a>
@@ -17,18 +17,33 @@
 
 	<main role="main">
 		<div id="principal" class="container-fluid">
-			<div id="conteudo" class="row">
-				<div class="col-xs-12 col-sm-9" style="background-color:white">
+			<div class="row" style="background-color:#F9F9F9">
+				<section class="col-xs-12 col-sm-8" style="background-color:white">
 					@yield('content')
+				</section>
+				<div id="sidebar" class="col-xs-12 col-sm-4 widget-area" role="complementary">
+					<aside id="search-3" class="widget widget_search"><div class="widget-title">Pesquisar</div>
+						<form role="search" method="get" id="searchform" class="searchform" action="http://www.i-sixtec.com/portal2/">
+							<div>
+								<label class="screen-reader-text" for="s">Pesquisar por:</label>
+								<input type="text" value="" name="s" id="s" />
+								<input type="submit" id="searchsubmit" value="Pesquisar" />
+							</div>
+						</form>
+					</aside>
+					<aside>
+						@section('sidebar')
+							Deve ser substituído.
+						@show
+					</aside>
 				</div>
-				<nav class="col-xs-12 col-sm-3" style="background-color:red">
-					
-				</nav>
 			</div>
 		</div>	
 	</main>
 	
 	<footer id="footer" role="contentinfo">
 	</footer>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 </body>
 </html>
