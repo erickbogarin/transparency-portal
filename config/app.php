@@ -156,6 +156,7 @@ return [
         portal\Providers\EventServiceProvider::class,
         portal\Providers\RouteServiceProvider::class,
 
+        Bestmomo\Scafold\ScafoldServiceProvider::class,
     ],
 
     /*
