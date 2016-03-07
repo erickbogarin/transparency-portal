@@ -16,7 +16,15 @@ main {
 	background-image: url('../img/fundo.png');
 }
 
-#conteudo {
+#titleHeader {
+	margin-top :40px;
+}
+
+#contentInfo {
+	margin-left :20px;
+}
+
+#contentPanel {
 	margin-top :20px;
 }
 
