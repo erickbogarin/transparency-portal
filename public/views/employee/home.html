@@ -1,0 +1,67 @@
+<page-title>Transparencias | Portal Transparencia</page-title>
+
+<content>
+	<h1 class="text-info">Transparências</h1>
+	<div ng-if="saved" class="alert alert-info alert-dismissible">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<h4>Transparência registrada com sucesso.</h4>
+	</div>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Nome</th>
+				<th>Data</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="ng-cloak" dir-paginate="value in data | itemsPerPage:5" total-items="totalTransparencias">
+				<td>{{value.nome}}</td>
+				<td>{{value.data}}</td>
+			</tr>   
+		</tbody>                
+	</table>
+	<h4 class="alert alert-warning close" ng-if="empty">Nenhuma transparência registrada.</h4>
+	<div class="text-center">
+		<dir-pagination-controls on-page-change="pageChanged(newPageNumber)" template-url=" views/layout/dirPagination.html">
+	</dir-pagination-controls>
+</div>
+
+<!-- Adicionar Modal-->
+<div class="modal fade" id="create-transparencia" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">Nova transparência</h4>
+			</div>
+			<form method="POST" name="addItem" role="form" ng-submit="saveAdd()">
+			<div class="modal-body">
+					<div class="form-group">
+						<label for="nomeInputFile" class="control-label">Nome:</label>
+						<input id="nomeInputFile" ng-model="form.nome" type="text" placeholder="Nome do documento" name="nome" class="form-control" required />
+					</div>
+					<div class="form-group">
+						<label for="nomeInputTipo" class="control-label">Tipo:</label>
+						<select class="form-control" ng-model="form.tipo_id" required>
+							<option value="">Selecione</option>
+							<option ng-repeat="tipo in types" value="{{tipo.id}}">{{tipo.nome}}</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="transparenciaInputFile" class="control-label">Arquivo:</label>
+						<input id="transparenciaInputFile" type="file" />
+						 <p class="help-block">Arquivo no formato PDF.</p>
+					</div>		
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+				<button type="submit" ng-disabled="addItem.$invalid" class="btn btn-primary">Salvar</button>
+			</div>
+			</form>	
+		</div>
+	</div>    
+</div>
+
+</content>
+
+<div ui-view="sidebar"></div>

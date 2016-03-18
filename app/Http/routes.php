@@ -4,13 +4,19 @@ Route::get('/', function () {
     return view('layout');
 });
 
-Route::resource('municipios', 'MunicipioController');    
-
 Route::group(['prefix' => 'api'], function()
 {
-    Route::resource('authenticate', 'AuthenticateController', ['only' => ['index']]);
-    Route::post('authenticate', 'AuthenticateController@authenticate');
-    Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser');
+    Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser'); /* api authencicate */  
+    Route::post('authenticate', 'AuthenticateController@authenticate'); /* api authencicate */  
+    Route::resource('authenticate', 'AuthenticateController', ['only' => ['index']]); /* api authencicate */  
+    
+    Route::resource('users', 'UserController'); /* api user */
+    Route::resource('user-transparencias', 'UserTransparenciasController'); /* api user transparencias */
+ 
+    Route::resource('municipios', 'MunicipioController'); /* api municipio */
+
+    Route::resource('transparencias', 'TransparenciasController'); /* api transparencias */
+    Route::resource('tipos-transparencias', 'TipoTransparenciaController'); /* api tipos transparencias */
 });
 
 Route::any('{path?}', function()

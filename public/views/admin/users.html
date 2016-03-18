@@ -1,0 +1,37 @@
+
+<page-title>Usuários | Portal Transparencia</page-title>
+
+<content>
+    <div id="contentInfo">
+        <h3 class="text-info">Usuários</h3>
+        <div class="input-group">
+            <input type="text" class="form-control ng-valid ng-dirty" placeholder="Nome do usuário" ng-change="searchDB()" ng-model="model.searchText" name="table_search" title="" tooltip="" ng-model-options="{ debounce: 500 }">
+            <span class="input-group-addon">Procurar</span>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="ng-cloak" dir-paginate="value in data | itemsPerPage:5" total-items="totalUsers">
+                    <td>{{value.name}}</td>
+                    <td>{{value.email}}</td>
+                </tr>   
+            </tbody>                
+        </table>
+        
+        <div class="text-center">
+            <dir-pagination-controls on-page-change="pageChanged(newPageNumber)" template-url=" views/layout/dirPagination.html">
+            </dir-pagination-controls>
+        </div>
+
+        <div class="alert alert-danger" ng-if="user.error">
+            <strong>There was an erro: </strong> {{error}}
+            <br>Please go back and login again
+        </div>
+    </div>
+</content>
+<div ui-view="sidebar"></div>

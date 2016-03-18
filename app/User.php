@@ -30,19 +30,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
-    /**
-     * Authenticate a user by username and password.
-     *
-     * @param string $username The username
-     * @param string $password Plain text password
-     * @return bool|user The user if the password matches the user's stored password, false otherwise.
-     */
-    public function authenticate($username, $password)
-    {
-    	$user = User::where('username', $username)->first();
-    	if (!Hash::check($password, $user->password)) {
-    		return false;
-    	}
-    	return $user;
+
+    public function municipio() {
+        return $this->belongTo('portal\Municipio');
+    }
+
+    public function transparencias() {
+        return $this->hasMany('portal\Transparencia');
     }
 }

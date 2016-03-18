@@ -2,22 +2,21 @@
 <page-title>Login | Portal Transparencia</page-title>
 
 <content>
-	<div id="contentPanel">
-		<div class="well">
-			<h3>Login</h3>
-			<div class="alert alert-danger" ng-if="auth.loginError">
-	            <h6><strong>Usuários ou senha inválidos.</strong><h6>
-	        </div>
+	<div class="well">
+		<h3>Login</h3>
+		<div class="alert alert-danger" ng-if="auth.loginError">
+			<strong class="alert-text">Usuários ou senha inválidos.</strong>
+		</div>
 			<form>
 				<div class="form-group">
-			    	<input type="email" class="form-control" placeholder="Email" ng-model="auth.email">
-			  	</div>
-			  	<div class="form-group">
-			    	<input type="password" class="form-control" placeholder="Password" ng-model="auth.password">
-			  	</div>
-			  	<button class="btn btn-primary" ng-click="auth.login()">Submit</button>
+					<input type="email" class="form-control" placeholder="Email" ng-model="auth.email">
+				</div>
+				<div class="form-group">
+					<input type="password" class="form-control" placeholder="Password" ng-model="auth.password">
+				</div>
+				<button class="btn btn-primary" ng-click="auth.login()">Submit</button>
 			</form>
 		</div>
-	</div>
 </content>
+
 <div ui-view="sidebar"></div>

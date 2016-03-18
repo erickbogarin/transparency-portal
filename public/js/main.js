@@ -1,4 +1,4 @@
-angular.module('ptm', ['directives','ui.router','satellizer'])
+angular.module('ptm', ['directives', 'ui.router','satellizer', 'ngResource','angularUtils.directives.dirPagination', 'myServices'])
 	.config(function($stateProvider, $urlRouterProvider, $authProvider, $locationProvider) {
 		
 		$authProvider.loginUrl = '/api/authenticate';
@@ -9,7 +9,7 @@ angular.module('ptm', ['directives','ui.router','satellizer'])
             .state('index', {
                 url: '/',
                 views:  {
-                    '': {templateUrl: 'views/home.html'},
+                    '': {templateUrl: 'views/home.php', controller: 'MunicipiosController as city'},
                     'sidebar@index': {templateUrl: 'views/layout/menu/mainMenu.html'}
                 }
             })
@@ -21,12 +21,25 @@ angular.module('ptm', ['directives','ui.router','satellizer'])
                 } 
             })
             .state('users', {
-                url: '/users',
+                url: '/users/',
                 views: {
-                    '': {templateUrl: 'views/userView.html', controller: 'UserController as user'},
+                    '': {templateUrl: 'views/admin/users.html', controller: 'UserController as user'},
                     'sidebar@users': {templateUrl: 'views/layout/menu/mainMenu.html'}
+                }    
+            })
+            .state('transparencias', {
+                url: '/transparencias/',
+                views: {
+                    '': {templateUrl: 'views/employee/home.html', controller: 'TransparenciaController'},
+                    'sidebar@transparencias': {templateUrl: 'views/layout/menu/employeeMenu.html'}
+                }    
+            })
+            .state('orgao', {
+                url: '/{orgao}/{municipio}',
+                views: {
+                    '': {templateUrl: 'views/transparencia/index.html', controller: 'TransparenciasController'},
+                    'sidebar@orgao': {templateUrl: 'views/layout/menu/mainMenu.html'}
                 }
-                
             });
 
 		$locationProvider.html5Mode({
