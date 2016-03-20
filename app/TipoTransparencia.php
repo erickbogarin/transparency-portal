@@ -11,7 +11,7 @@ class TipoTransparencia extends Model
     public $timestamps = false;
 
     public function transparencias() {
-    	return $this->hasMany('portal\Transparencia');
+    	return $this->hasMany('portal\Transparencia', 'id');
     }
 
 }

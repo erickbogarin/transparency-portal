@@ -21,14 +21,28 @@ class UserTransparenciasController extends Controller
     {
         $user = $request->get('user');
         $municipio = $request->get('municipio');
+    
+        if($request->get('date')) {
+            $transparencias = Transparencia::
+            where([
+                ['usuario_id',$user],
+                ['municipio_id',$municipio],
+                [DB::raw('DATE_FORMAT(transparencia.data, "%m/%Y")'), 'LIKE', "%{$request->get('date')}"],
+                ])
+                ->join('tipo_transparencia', 'transparencia.tipo_id', '=', 'tipo_transparencia.id')
+                ->with('tipoTransparencia')
+                ->orderBy('data', 'DESC')->paginate(10);      
+        } else {
+            $transparencias = Transparencia::
+            select('transparencia.*', 'tipo_transparencia.nome as tipo_nome')
+            ->leftJoin('tipo_transparencia', 'tipo_transparencia.id', '=', 'transparencia.tipo_id')
+            ->where([
+                ['usuario_id',$user],
+                ['municipio_id',$municipio],
+                ])
+                ->orderBy('data', 'DESC')->paginate(10);
+        }
 
-        $transparencias = DB::table('transparencia')
-        ->select('transparencia.nome', 'transparencia.data', 'transparencia.link', 'transparencia.usuario_id')
-        ->where([
-            ['usuario_id',$user],
-            ['municipio_id',$municipio],
-            ])->paginate(5);      
-        
         return response($transparencias);
     }
 
@@ -64,7 +78,8 @@ class UserTransparenciasController extends Controller
      */
     public function edit($id)
     {
-        //
+        $transparencia = Transparencia::find($id);
+        return response($transparencia);
     }
 
     /**
@@ -76,7 +91,11 @@ class UserTransparenciasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $input = $request->all();
+        
+        Transparencia::where("id",$id)->update($input);
+        $transparencia = Transparencia::find($id);
+        return response($transparencia);
     }
 
     /**
@@ -87,6 +106,6 @@ class UserTransparenciasController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return Transparencia::where('id',$id)->delete();
     }
 }

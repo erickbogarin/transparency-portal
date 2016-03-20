@@ -10,7 +10,7 @@ class Transparencia extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['nome', 'data', 'link', 'orgao_id', 'municipio_id', 'usuario_id', 'tipo_id'];
+ 	protected $fillable = ['nome', 'data', 'link', 'orgao_id', 'municipio_id', 'tipo_id'];   
 
     protected $guarded = ['id'];
 
@@ -26,6 +26,7 @@ class Transparencia extends Model
 	}
 
 	public function tipoTransparencia() {
-		return $this->belongTo('portal\TipoTransparencia');
+		return $this->belongsTo('portal\TipoTransparencia', 'id');
 	}
+
 }

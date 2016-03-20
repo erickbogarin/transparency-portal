@@ -28,9 +28,8 @@
             </dir-pagination-controls>
         </div>
 
-        <div class="alert alert-danger" ng-if="user.error">
-            <strong>There was an erro: </strong> {{error}}
-            <br>Please go back and login again
+        <div ng-controller="AuthController as auth" ng-if="user.error">
+            <div ng-init="auth.logout()"></div>
         </div>
     </div>
 </content>

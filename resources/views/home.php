@@ -1,7 +1,6 @@
 <page-title>Portal Transparencia</page-title>
 
 <content>	
-	
 	<h1 class="text-info">Bem-vindo ao Portal</h1>
 
 	<p class="content-paragrath text-justify">A Associação Amazonense dos Municípios – AAM, buscando sempre o aperfeiçoamento de sua plataforma de transparência municipal, apresenta aos usuários um novo Portal da Transparência dos Municípios do Amazonas.

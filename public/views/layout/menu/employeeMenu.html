@@ -1,11 +1,9 @@
 <aside id="sidebar" class="col-12-xs col-md-4 col-lg-4" role="complementary">
 	<div class="widget">	
-		<h1 class="widget-title">Administrar</h1>
+		<h1 class="widget-title">Transparências</h1>
 		<nav class="nav navbar-default">
 			<ul class="nav nav-sidebar">
-				<li class="nav-sidebar-item"><A HREF="#"
-					data-toggle="modal" data-target="#create-transparencia">Novo registro</A></li>
-				<li class="nav-sidebar-item"><A HREF="#">PTM - Tutoriais</A></li>
+				<li class="nav-sidebar-item" ng-repeat="tipo in types" ><a data-toggle="modal" data-target="#edit-data" ng-model="model.typeId" ng-change="searchDB()" >{{tipo.nome}}</a></li>
 			</ul>
 		</nav>
 	</div>

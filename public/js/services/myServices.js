@@ -1,5 +1,5 @@
-angular.module('myServices', []).
-	factory('dataFactory', function($http) {
+angular.module('myServices', [])
+	.factory('dataFactory', function($http) {
 		var myService = {
 			httpRequest: function(url,method,params,dataPost,upload) {
 				var passParameters = {};
@@ -53,5 +53,19 @@ angular.module('myServices', []).
 			}
 		};
 		return myService;
+	})
+	.factory('fileUpload', function ($http) {
+	    var fileUpload = { 
+	    	uploadFileToUrl: function(file, uploadUrl) {
+	        var fd = new FormData();
+	        fd.append('file', file);
+	        $http.post(uploadUrl, fd, {
+	            transformRequest: angular.identity,
+	            headers: {'Content-Type': undefined}
+	        }).success(function(){
+		    }).error(function(){
+		    });}
+		};
+		return fileUpload;
 	});
 

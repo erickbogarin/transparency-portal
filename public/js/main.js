@@ -43,7 +43,7 @@ angular.module('ptm', ['directives', 'ui.router','satellizer', 'ngResource','ang
             });
 
 		$locationProvider.html5Mode({
-			enabled: true,
+			enabled: false,
       		requireBase: false
 		});
 	})

@@ -72,6 +72,30 @@ main {
 
 .ng-cloak { display: none !important; }
 
+a {
+	text-decoration: none !important;
+}
+
+.back {
+	padding: 10px;
+	display: block;
+	border: 1px solid #d6d6c2;
+	border-radius: 5px;
+}
+
+.back:hover {
+	background-color: #FFF;	
+}
+
+.table-item-action {
+	display: none;
+}
+
+tr:hover .table-item-action {
+	text-align: center;
+	display: block;
+}
+
 @media only screen and (max-width: 990px) {
 	#branding {
 		height: 9.38rem;

@@ -1,29 +1,61 @@
 <page-title>Transparencias | Portal Transparencia</page-title>
 
-<content>
-	<h1 class="text-info">Transparências</h1>
+<div class="content">
+	<div class="row">
+		<div class="col-lg-12 margin-tb">
+			<div class="pull-left">
+				<div class="box-tools" style="display:inline-table">
+					<div class="form-group">
+						<label>Consulte um mês / ano</label>
+						<div class="input-group">
+							<input type="month" class="form-control ng-valid ng-dirty" placeholder="Search" ng-change="searchDB()" ng-model="search.date" name="table_search" title="" tooltip="">
+							<span class="input-group-addon">Procurar</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="pull-right" style="margin-top:29px;margin-right:30px">
+				<button class="btn btn-primary" data-toggle="modal" data-target="#create-transparencia">Nova Transparência</button>
+			</div>
+		</div>
+	</div>
+	
 	<div ng-if="saved" class="alert alert-info alert-dismissible">
 		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		<h4>Transparência registrada com sucesso.</h4>
 	</div>
-	<table class="table">
+	{{transparenciaType}}
+	<table class="table table-condensed">
 		<thead>
 			<tr>
-				<th>Nome</th>
+				<th>Nome do documento</th>
 				<th>Data</th>
+				<th>Tipo</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr class="ng-cloak" dir-paginate="value in data | itemsPerPage:5" total-items="totalTransparencias">
+			<tr class="ng-cloak" dir-paginate="value in data | itemsPerPage:10" total-items="totalTransparencias">
 				<td>{{value.nome}}</td>
-				<td>{{value.data}}</td>
-			</tr>   
-		</tbody>                
-	</table>
-	<h4 class="alert alert-warning close" ng-if="empty">Nenhuma transparência registrada.</h4>
-	<div class="text-center">
-		<dir-pagination-controls on-page-change="pageChanged(newPageNumber)" template-url=" views/layout/dirPagination.html">
-	</dir-pagination-controls>
+				<td>{{value.data | date: "dd/MM/yyyy"}}</td>
+				<td>{{value.tipo_nome}}</td>
+				<td class="table-item-action">
+					<button  data-toggle="modal" ng-click="edit(value.id)" data-target="#edit-data" type="button" class="btn btn-default" 
+					aria-label="Left Align">
+					<span class="text-info glyphicon glyphicon-pencil" aria-hidden="true"></span>
+				</button>					
+				<button ng-click="remove(value,$index)" class="btn btn-default">
+					<span class="text-danger glyphicon glyphicon-trash" aria-hidden="true"></span>
+				</button>
+			</td>
+		</tr>   
+	</tbody>                
+</table>
+
+<h4 class="alert alert-warning" ng-if="empty">Nenhuma transparência foi encontrada.</h4>
+<div class="text-center">
+	<dir-pagination-controls on-page-change="pageChanged(newPageNumber)" template-url=" views/layout/dirPagination.html">
+</dir-pagination-controls>
 </div>
 
 <!-- Adicionar Modal-->
@@ -35,33 +67,70 @@
 				<h4 class="modal-title" id="myModalLabel">Nova transparência</h4>
 			</div>
 			<form method="POST" name="addItem" role="form" ng-submit="saveAdd()">
-			<div class="modal-body">
+				<div class="modal-body">
 					<div class="form-group">
 						<label for="nomeInputFile" class="control-label">Nome:</label>
 						<input id="nomeInputFile" ng-model="form.nome" type="text" placeholder="Nome do documento" name="nome" class="form-control" required />
 					</div>
 					<div class="form-group">
+						<label for="dataInputFile" class="control-label">Data:</label>
+						<input id="dataInputFile" type="date" ng-model="form.data" class="form-control" required />
+					</div>
+					<div class="form-group">
 						<label for="nomeInputTipo" class="control-label">Tipo:</label>
 						<select class="form-control" ng-model="form.tipo_id" required>
-							<option value="">Selecione</option>
+							<option value="">Selecionar tipo...</option>
 							<option ng-repeat="tipo in types" value="{{tipo.id}}">{{tipo.nome}}</option>
 						</select>
 					</div>
 					<div class="form-group">
 						<label for="transparenciaInputFile" class="control-label">Arquivo:</label>
-						<input id="transparenciaInputFile" type="file" />
-						 <p class="help-block">Arquivo no formato PDF.</p>
+						<input id="transparenciaInputFile" type="file" file-model="myFile"/>
+						<p class="help-block">Arquivo no formato PDF.</p>
 					</div>		
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-				<button type="submit" ng-disabled="addItem.$invalid" class="btn btn-primary">Salvar</button>
-			</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+					<button type="submit" ng-disabled="addItem.$invalid" class="btn btn-primary">Salvar</button>
+				</div>
 			</form>	
 		</div>
 	</div>    
 </div>
 
-</content>
+<!-- Editar Modal -->
+<div class="modal fade" id="edit-data" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<form method="POST" name="editItem" role="form" ng-submit="saveEdit()">
+				<input ng-model="form.id" type="hidden" placeholder="Name" name="name" class="form-control" />
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Editar transparência</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label class="control-label">Nome do documento:</label>
+						<input ng-model="form.nome" type="text" placeholder="Name" name="nome" class="form-control" required />
+					</div>
+					<div class="form-group">
+						<label class="control-label">Data:</label>
+						<input type="date" ng-model="form.data" class="form-control" required />
+					</div>
+					<div class="form-group">
+						<label for="nomeInputTipo" class="control-label">Tipo:</label>
+						<select class="form-control" ng-model="form.tipo_id" multiple required>
+							<option ng-repeat="tipo in types" value="{{tipo.id}}">{{tipo.nome}}</option>
+						</select>
+					</div>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+					<button type="submit" ng-disabled="editItem.$invalid" class="btn btn-primary create-crud">Salvar</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+</div>
 
-<div ui-view="sidebar"></div>
+</div>
+
