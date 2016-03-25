@@ -10,6 +10,15 @@ angular.module('ptm').controller('TransparenciasController', function(dataFactor
 	$scope.orgao = $stateParams.orgao;
 	$scope.empty = false;
 
+	$scope.types = $http.get('api/tipos-transparencias')
+	.success(function(types) {
+
+		$scope.types = types;
+	}).error(function(error) {
+
+		console.log(error);
+	});	
+	
 	$scope.totalTransparencias = 0;
 	$scope.pageChanged = function(newPage) {
 		getResultsPage(newPage);

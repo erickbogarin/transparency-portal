@@ -45,6 +45,7 @@ main {
 }
 
 .city-item {
+	text-align: center;
 	border: 1px solid #d6d6c2;
 	border-radius: 5px;
 }
@@ -79,12 +80,16 @@ a {
 .back {
 	padding: 10px;
 	display: block;
+	text-align: left;
+	color: #0c5aa6;
+	width: 100%;
+	background-color: #FFF;
 	border: 1px solid #d6d6c2;
 	border-radius: 5px;
 }
 
 .back:hover {
-	background-color: #FFF;	
+	background-color: #F9F9F9;	
 }
 
 .table-item-action {
@@ -151,16 +156,20 @@ tr:hover .table-item-action {
 }
 
 footer {
-	background-image: url('../img/topo.png');
-	background-repeat: no-repeat;
-	height: 80px;
-
+	position: absolute;
+	
 	-moz-transform: scaleX(-1);
 	-o-transform: scaleX(-1);
 	-webkit-transform: scaleX(-1);
 	transform: scaleX(-1);
 	filter: FlipH;
 	-ms-filter: "FlipH";
+}
+
+footer img {
+	background-repeat: no-repeat;
+	height: 80px;
+	width: 100%;
 }
 
 #sidebar {

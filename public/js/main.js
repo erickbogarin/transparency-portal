@@ -1,4 +1,5 @@
-angular.module('ptm', ['directives', 'ui.router','satellizer', 'ngResource','angularUtils.directives.dirPagination', 'myServices'])
+angular.module('ptm', ['directives', 'ui.router','satellizer', 'ngResource', 'angularUtils.directives.dirPagination', 
+    'ngFileUpload', 'myServices'])
 	.config(function($stateProvider, $urlRouterProvider, $authProvider, $locationProvider) {
 		
 		$authProvider.loginUrl = '/api/authenticate';
@@ -16,43 +17,43 @@ angular.module('ptm', ['directives', 'ui.router','satellizer', 'ngResource','ang
             .state('auth', {
                 url: '/auth',
                 views:  {
-                    '': {templateUrl: 'views/authView.html', controller: 'AuthController as auth'},
-                    'sidebar@auth': {templateUrl: 'views/layout/menu/mainMenu.html'}
+                    '': {templateUrl: 'views/authView.html', controller: 'AuthController as auth'}
                 } 
             })
             .state('users', {
-                url: '/users/',
+                url: '/users',
                 views: {
                     '': {templateUrl: 'views/admin/users.html', controller: 'UserController as user'},
                     'sidebar@users': {templateUrl: 'views/layout/menu/mainMenu.html'}
                 }    
             })
             .state('transparencias', {
-                url: '/transparencias/',
+                url: '/transparencias',
                 views: {
                     '': {templateUrl: 'views/employee/home.html', controller: 'TransparenciaController'},
-                    'sidebar@transparencias': {templateUrl: 'views/layout/menu/employeeMenu.html'}
+                    'sidebar@transparencias': {templateUrl: 'views/layout/menu/tpMenu.html'}
                 }    
             })
             .state('orgao', {
                 url: '/{orgao}/{municipio}',
                 views: {
                     '': {templateUrl: 'views/transparencia/index.html', controller: 'TransparenciasController'},
-                    'sidebar@orgao': {templateUrl: 'views/layout/menu/mainMenu.html'}
+                    'sidebar@orgao': {templateUrl: 'views/layout/menu/tpMenu.html'}
                 }
             });
 
 		$locationProvider.html5Mode({
-			enabled: false,
+			enabled: true,
       		requireBase: false
 		});
 	})
-    .run(function($rootScope, $state) {
+    .run(function($rootScope, $state, authenticate) {
 
+            $rootScope.authError = false;    
             // $stateChangeStart is fired whenever the state changes. We can use some parameters
             // such as toState to hook into details about the state as it is changing
             $rootScope.$on('$stateChangeStart', function(event, toState) {
-
+            
                 // Grab the user from local storage and parse it to an object
                 var user = JSON.parse(localStorage.getItem('user'));            
 
@@ -60,7 +61,8 @@ angular.module('ptm', ['directives', 'ui.router','satellizer', 'ngResource','ang
                 // likely authenticated. If their token is expired, or if they are
                 // otherwise not actually authenticated, they will be redirected to
                 // the auth state because of the rejected request anyway
-                if(user) {
+        
+                if(authenticate.isAuthenticated()) {
 
                     // The user's authenticated state gets flipped to
                     // true so we can now show parts of the UI that rely
@@ -80,9 +82,17 @@ angular.module('ptm', ['directives', 'ui.router','satellizer', 'ngResource','ang
                         // to change states
                         event.preventDefault();
 
-                        // go to the "main" state which in our case is users
-                        $state.go('users');
+                        // go to the "main" state which in our case is index
+                        $state.go('index');
                     }       
                 }
+                else {
+                    if(user) {
+                        $rootScope.authError = true;
+                        authenticate.logout();
+                    }
+                }
+
+
             });
         });

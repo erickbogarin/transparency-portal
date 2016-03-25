@@ -1,6 +1,11 @@
 <aside id="sidebar" class="col-12-xs col-md-4 col-lg-4" role="complementary">
+	<a class="back" ui-sref="index">
+		<p><span class="glyphicon glyphicon-circle-arrow-left"></span> Voltar</p>
+	</a>
 	<div class="widget">	
-		<h1 class="widget-title">Transparências</h1>
+		<h1 class="widget-title">
+			Transparências
+		</h1>
 		<nav class="nav navbar-default">
 			<ul class="nav nav-sidebar">
 				<li class="nav-sidebar-item" ng-repeat="tipo in types" ><a data-toggle="modal" data-target="#edit-data" ng-model="model.typeId" ng-change="searchDB()" >{{tipo.nome}}</a></li>

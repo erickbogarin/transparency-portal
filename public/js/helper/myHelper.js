@@ -7,12 +7,18 @@ function apiModifyTable(originalData,id,response){
 	return originalData;
 }
 
-function convertDataPattern(data) {
-	var dataFormatted = data;
-	dataFormatted = dataFormatted.getFullYear() + '-' + (dataFormatted.getMonth() + 1) + '-' + dataFormatted.getDate();
-	return dataFormatted;
+function formatDataPattern(date) {
+	return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
 }
 
 function convertToLocaleDate(date) {
 	return new Date(date).toLocaleDateString().toString().substring(4, 10);
+}
+
+function prepareFormEditDatePattern(date) {
+	return new Date(date.replace(/-/, '/'));
+}
+
+function clearStringFileName(fileName) {
+	return fileName.replace(/\s+/g, '-')
 }

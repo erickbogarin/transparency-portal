@@ -1,4 +1,4 @@
-angular.module('ptm').controller('TransparenciaController', function(dataFactory, fileUpload, $scope, $rootScope, $http) {
+angular.module('ptm').controller('TransparenciaController', function(dataFactory, Upload, $scope, $rootScope, $http) {
 
 	$scope.data = [];
 	$scope.libraryTemp = {};
@@ -6,25 +6,36 @@ angular.module('ptm').controller('TransparenciaController', function(dataFactory
 	$scope.totalTransparencias = 0;
 	$scope.empty = false;
 	$scope.saved = false;
-	$scope.myFile = null;
-
+	
 	$scope.search = {
 		date: ''
 	};
 	
 	$scope.user = {
 		id: $rootScope.currentUser.id,
-		municipio_id: $rootScope.currentUser.municipio_id
+		municipio_id: $rootScope.currentUser.municipio_id, 
+		orgao_id: $rootScope.currentUser.orgao_id
 	};
 	
 	$scope.form = {
 		usuario_id: $rootScope.currentUser.id,
 		municipio_id: $rootScope.currentUser.municipio_id,
+		orgao_id: $rootScope.currentUser.orgao_id,
 		nome: '',
+		link: '',
 		data: '',
-		tipo_id: null,
-		orgao_id: 1
+		tipo_id: null
 	};
+
+	$scope.resetCopy = angular.copy($scope.form);
+
+	var resetForm = function() {
+		$scope.form = angular.copy($scope.resetCopy);
+		$scope.editItem.$setPristine();
+		$scope.editItem.$setValidity();
+		$scope.editItem.$setUntouched();
+		$scope.$apply();
+	}
 
 	$scope.types = $http.get('api/tipos-transparencias')
 	.success(function(types) {
@@ -46,7 +57,8 @@ angular.module('ptm').controller('TransparenciaController', function(dataFactory
 	getResultsPage(1);
 
 	function getResultsPage(pageNumber) {
-		var url = '/api/user-transparencias?user='+$scope.user.id+'&municipio='+$scope.user.municipio_id+'&page='+pageNumber;
+		var url = '/api/user-transparencias?user='+$scope.user.id+'&municipio='+$scope.user.municipio_id+
+			'&orgao='+$scope.user.orgao_id+'&page='+pageNumber;
 		if(! $.isEmptyObject($scope.libraryTemp)){
 			dataFactory.httpRequest(url+'&date='+$scope.search.date).then(function(data) {
 				$scope.data = data.data;
@@ -81,21 +93,42 @@ angular.module('ptm').controller('TransparenciaController', function(dataFactory
 		checkEmptyTransparencia();
 	}
 
-	$scope.saveAdd = function() {	
-		$scope.form.data = convertDataPattern($scope.form.data);
-		var file = $scope.myFile;
-		var uploadUrl = '/uploads';
-		fileUpload.uploadFileToUrl(file, uploadUrl);
-		
-		dataFactory.httpRequest('api/user-transparencias','POST',{},$scope.form).then(function(data) {
-			$scope.data.push(data);
-
-			$scope.form.nome = '';
-			$scope.form.tipo_id = null;
-			$scope.form.data = '';
+	var uploadFile = function(file, fileName) {
+		file.upload = Upload.upload({
+			url: '/public/upload',
+			method: 'POST',
+			data: {file: file, fileName: fileName}
+		}).then(function (resp) {
+			console.log('Success ' + resp.config.data.file.name + ' uploaded. Response: ' + resp.data, resp.status);
+		}, function (resp) {
+			$scope.errorMsg = resp.status + ': ' + resp.data;
+			console.log('Error status: ' + resp.status);
+		}, function (evt) {
+			var progressMsg;
+			file.progress = parseInt(100.0 * evt.loaded / evt.total);
 			
-			$scope.saved = true;
+			if(file.progress == 100) progressMsg = 'Enviado: '; else progressMsg = 'Enviando arquivo para o servidor: ';
+			file.progress = progressMsg +  file.progress;
+		});	
+	}
+
+	var autoFillForm = function(fileName) {
+		$scope.form.tipo_id = parseInt($scope.form.tipo_id);
+		$scope.form.data = formatDataPattern($scope.form.data);
+		$scope.form.link = clearStringFileName(fileName);
+	}
+
+	$scope.saveAdd = function(file) {	
+		autoFillForm(file.name);
+		dataFactory.httpRequest('api/user-transparencias','POST',{},$scope.form).then(function(data) {
+			
+			$scope.data.push(data);
+			uploadFile(file, data.link);
+			
 			$(".modal").modal("hide");
+			$scope.saved = true;
+			resetForm();
+
 			getResultsPage(1);
 		})
 		.catch(function(error) {
@@ -105,13 +138,12 @@ angular.module('ptm').controller('TransparenciaController', function(dataFactory
 
 	$scope.edit = function(id) {
 		dataFactory.httpRequest('api/user-transparencias/'+id+'/edit').then(function(data) {
-			console.log(data);
 			$scope.form = data;
-			$scope.form.data = new Date($scope.form.data);
+			$scope.form.data = prepareFormEditDatePattern($scope.form.data);
 		});
 	}
 
-	$scope.saveEdit = function(){
+	$scope.saveEdit = function() {
 		$scope.form.tipo_id = parseInt($scope.form.tipo_id[0]);
 		console.log($scope.form);
 		dataFactory.httpRequest('api/user-transparencias/'+$scope.form.id,'PUT',{},$scope.form).then(function(data) {
@@ -121,13 +153,18 @@ angular.module('ptm').controller('TransparenciaController', function(dataFactory
 	}
 
 	$scope.remove = function(item,index){
-		var result = confirm("Você quer realmente deletar esta transparência?");
-		if (result) {
+		$('#remove-data').modal().one('click', '#delete', function() {
 			dataFactory.httpRequest('api/user-transparencias/'+item.id,'DELETE').then(function(data) {
 				$scope.data.splice(index,1);
 				getResultsPage(1);
+
+				$(".modal").modal("hide");
 			});
-		}
+		});
 	}
+
+	$('#edit-data').on('hide.bs.modal', function () {
+		resetForm();
+	});
 
 });	

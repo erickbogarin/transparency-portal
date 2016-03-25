@@ -6,7 +6,7 @@
 			<div class="pull-left">
 				<div class="box-tools" style="display:inline-table">
 					<div class="form-group">
-						<label>Consulte um mês / ano</label>
+						<label>Consulte por período (mês / ano):</label>
 						<div class="input-group">
 							<input type="month" class="form-control ng-valid ng-dirty" placeholder="Search" ng-change="searchDB()" ng-model="search.date" name="table_search" title="" tooltip="">
 							<span class="input-group-addon">Procurar</span>
@@ -24,8 +24,8 @@
 		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		<h4>Transparência registrada com sucesso.</h4>
 	</div>
-	{{transparenciaType}}
-	<table class="table table-condensed">
+	
+	<table class="table table-condensed table-hover">
 		<thead>
 			<tr>
 				<th>Nome do documento</th>
@@ -41,13 +41,16 @@
 				<td>{{value.tipo_nome}}</td>
 				<td class="table-item-action">
 					<button  data-toggle="modal" ng-click="edit(value.id)" data-target="#edit-data" type="button" class="btn btn-default" 
-					aria-label="Left Align">
-					<span class="text-info glyphicon glyphicon-pencil" aria-hidden="true"></span>
-				</button>					
-				<button ng-click="remove(value,$index)" class="btn btn-default">
-					<span class="text-danger glyphicon glyphicon-trash" aria-hidden="true"></span>
-				</button>
-			</td>
+						aria-label="Left Align">
+						<span class="text-info glyphicon glyphicon-pencil" aria-hidden="true"></span>
+					</button>
+					<a href="/public/{{value.link}}" target='_blank' class="btn btn-default">
+						<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+					</a>					
+					<button ng-click="remove(value,$index)" class="btn btn-default">
+						<span class="text-danger glyphicon glyphicon-trash" aria-hidden="true"></span>
+					</button>
+				</td>
 		</tr>   
 	</tbody>                
 </table>
@@ -58,15 +61,15 @@
 </dir-pagination-controls>
 </div>
 
-<!-- Adicionar Modal-->
-<div class="modal fade" id="create-transparencia" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
+	<!-- Adicionar Modal-->
+	<div class="modal fade" id="create-transparencia" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<h4 class="modal-title" id="myModalLabel">Nova transparência</h4>
 			</div>
-			<form method="POST" name="addItem" role="form" ng-submit="saveAdd()">
+			<form method="POST" name="addItem" role="form" ng-submit="saveAdd(file)">
 				<div class="modal-body">
 					<div class="form-group">
 						<label for="nomeInputFile" class="control-label">Nome:</label>
@@ -85,52 +88,78 @@
 					</div>
 					<div class="form-group">
 						<label for="transparenciaInputFile" class="control-label">Arquivo:</label>
-						<input id="transparenciaInputFile" type="file" file-model="myFile"/>
+						<input type="file" ngf-select ng-model="file" name="file"    
+						accept="pdf/*"  ngf-pattern="'.pdf'" ngf-max-size="2MB" required
+						ngf-model-invalid="errorFile">
 						<p class="help-block">Arquivo no formato PDF.</p>
-					</div>		
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-					<button type="submit" ng-disabled="addItem.$invalid" class="btn btn-primary">Salvar</button>
-				</div>
-			</form>	
-		</div>
-	</div>    
-</div>
-
-<!-- Editar Modal -->
-<div class="modal fade" id="edit-data" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<form method="POST" name="editItem" role="form" ng-submit="saveEdit()">
-				<input ng-model="form.id" type="hidden" placeholder="Name" name="name" class="form-control" />
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="myModalLabel">Editar transparência</h4>
-				</div>
-				<div class="modal-body">
-					<div class="form-group">
-						<label class="control-label">Nome do documento:</label>
-						<input ng-model="form.nome" type="text" placeholder="Name" name="nome" class="form-control" required />
+						<i ng-show="addItem.file.$error.pattern">O arquivo deve ser no formato  <strong>PDF</strong>.</i><br>
+						<i ng-show="addItem.file.$error.maxSize">O tamanho do arquivo atual é 
+							{{errorFile.size / 1000000|number:1}}MB, o limite é até 2MB.</i>
+							<br>
+							
+						</div>		
 					</div>
-					<div class="form-group">
-						<label class="control-label">Data:</label>
-						<input type="date" ng-model="form.data" class="form-control" required />
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+						<button type="submit" ng-disabled="addItem.$invalid" class="btn btn-primary">Salvar</button>
 					</div>
-					<div class="form-group">
-						<label for="nomeInputTipo" class="control-label">Tipo:</label>
-						<select class="form-control" ng-model="form.tipo_id" multiple required>
-							<option ng-repeat="tipo in types" value="{{tipo.id}}">{{tipo.nome}}</option>
-						</select>
-					</div>
-					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-					<button type="submit" ng-disabled="editItem.$invalid" class="btn btn-primary create-crud">Salvar</button>
-				</div>
+				</form>	
 			</div>
-		</form>
+		</div>    
+	</div>
+
+	<!-- Editar Modal -->
+	<div class="modal fade" id="edit-data" tabindex="-1" role="dialog" aria-labelledby="Label">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form method="POST" name="editItem" role="form" ng-submit="saveEdit()">
+					<input ng-model="form.id" type="hidden" placeholder="Name" name="name" class="form-control" />
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">Editar transparência</h4>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label class="control-label">Nome do documento:</label>
+							<input ng-model="form.nome" type="text" placeholder="Name" name="nome" class="form-control" required />
+						</div>
+						<div class="form-group">
+							<label class="control-label">Data:</label>
+							<input type="date" ng-model="form.data" class="form-control" required />
+						</div>
+						<div class="form-group">
+							<label for="nomeInputTipo" class="control-label">Tipo:</label>
+							<select class="form-control" ng-model="form.tipo_id" multiple required>
+								<option ng-repeat="tipo in types" value="{{tipo.id}}">{{tipo.nome}}</option>
+							</select>
+						</div>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+						<button type="submit" ng-disabled="editItem.$invalid" class="btn btn-primary create-crud">Salvar</button>
+					</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+<div class="modal fade" id="remove-data" tabindex="-1" role="dialog" aria-labelledby="myLabel">
+	<div class="modal-dialog modal-sm" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">Remover transparência</h4>
+			</div>
+			<div class="modal-body">
+				 <p>quwe exluir memo?</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+				<button id="delete" type="button" class="btn btn-primary">Remover</button>
+			</div>
+		</div>
 	</div>
 </div>
 </div>
-
+</div>
 </div>
 

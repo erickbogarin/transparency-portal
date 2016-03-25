@@ -33,33 +33,38 @@
 						</ul>
 						<form class="navbar-form navbar-right">
 							<label class="text-muted">Usuário: {{currentUser.name}}</label>
-							<button ng-controller="AuthController as auth"type="button" class="btn btn-default"
-							ng-click="auth.logout()">
+							<button ng-controller="AuthController"type="button" class="btn btn-default"
+							ng-click="logout()">
 							Encerrar sessão
 						</button>
 					</form>
 				</div>
 			</div>
 		</nav>
+		<div ng-if="authError" class="alert alert-warning alert-dismissible col-lg-5">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4>Sua sessão expirou. Logue-se novamente.</h4>
+		</div>
 		<div ui-view></div>
 	</div>
 </main>
 
 <footer id="footer" role="contentinfo">
+	<img src="../img/topo.png" alt="Rodapé">
 </footer>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-<script src="js/lib/script.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-
-
 <!-- Angular JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.1/angular.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/satellizer/0.11.2/satellizer.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.1/angular-resource.min.js"></script>
+<script src="js/lib/ng-file-upload-shim.js"></script>
+<script src="js/lib/ng-file-upload.min.js"></script>
 <!--Portal -->
 <script src="js/lib/dirPagination.js"></script>
 <script src="js/main.js"></script>
+<script src="js/services/auth-service.js"></script>
 <script src="js/services/myServices.js"></script>
 <script src="js/helper/myHelper.js"></script>
 <script src="js/directives/directives.js"></script>

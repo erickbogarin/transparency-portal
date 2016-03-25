@@ -35,6 +35,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->belongTo('portal\Municipio');
     }
 
+    public function orgao() {
+        return $this->belongTo('portal\Orgao');
+    }
+
     public function transparencias() {
         return $this->hasMany('portal\Transparencia');
     }

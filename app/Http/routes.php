@@ -6,17 +6,27 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'api'], function()
 {
-    Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser'); /* api authencicate */  
-    Route::post('authenticate', 'AuthenticateController@authenticate'); /* api authencicate */  
-    Route::resource('authenticate', 'AuthenticateController', ['only' => ['index']]); /* api authencicate */  
+    /* api de autenticação*/  
+    Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser'); 
+    Route::post('authenticate', 'AuthenticateController@authenticate'); 
+    Route::resource('authenticate', 'AuthenticateController', ['only' => ['index']]); 
     
-    Route::resource('users', 'UserController'); /* api user */
-    Route::resource('user-transparencias', 'UserTransparenciasController'); /* api user transparencias */
- 
-    Route::resource('municipios', 'MunicipioController'); /* api municipio */
+    /* api de usuários autenticados */
+    Route::resource('users', 'UserController'); 
+    Route::resource('user-transparencias', 'EmployerTransparenciasController'); 
 
-    Route::resource('transparencias', 'TransparenciasController'); /* api transparencias */
-    Route::resource('tipos-transparencias', 'TipoTransparenciaController'); /* api tipos transparencias */
+    /* api dos municipios */
+    Route::resource('municipios', 'MunicipioController'); 
+
+    /* api das transparencias */
+    Route::resource('transparencias', 'TransparenciasController'); 
+    Route::resource('tipos-transparencias', 'TipoTransparenciaController');
+});
+
+Route::group(['prefix' => 'public'], function()
+{
+    Route::resource('/upload', 'FileController@store');
+    Route::get('/{filename}', 'FileController@find');
 });
 
 Route::any('{path?}', function()
@@ -24,7 +34,8 @@ Route::any('{path?}', function()
     return view('layout');
 })->where("path", ".+");
 
-Blade::setContentTags('<%', '%>'); // For variables and all things Blade.
-Blade::setEscapedContentTags('<%%', '%%>'); // For escaped data.
+/* resolver for angularjs conflicts */
+Blade::setContentTags('<%', '%>'); 
+Blade::setEscapedContentTags('<%%', '%%>'); 
 
 
