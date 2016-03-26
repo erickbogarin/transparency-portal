@@ -1,0 +1,12 @@
+.nav-sidebar {
+	background: #fff;
+}
+
+.nav-sidebar-item {
+	background-color: #FFF;
+	border-radius: 5px;
+}
+
+#navbar-collapse {
+	display: none;
+}

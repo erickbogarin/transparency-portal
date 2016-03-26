@@ -19,15 +19,15 @@ class EmployerTransparenciaRepository
 	public function userDateTransparencias($user, $municipio, $orgao, $date)
 	{
 		return Transparencia::
-		select('transparencia.*', 'tipo_transparencia.nome as tipo_nome')
-		->leftJoin('tipo_transparencia', 'tipo_transparencia.id', '=', 'transparencia.tipo_id')
-		->where([
-			['usuario_id',$user],
-			['municipio_id',$municipio],
-			['orgao_id',$orgao],
-			[DB::raw('DATE_FORMAT(transparencia.data, "%m/%Y")'), 'LIKE', "%{$date}"],
-			])
-		->orderBy('data', 'DESC')->paginate(10);      
+			select('transparencia.*', 'tipo_transparencia.nome as tipo_nome')
+			->leftJoin('tipo_transparencia', 'tipo_transparencia.id', '=', 'transparencia.tipo_id')
+			->where([
+				['usuario_id',$user],
+				['municipio_id',$municipio],
+				['orgao_id',$orgao],
+				[DB::raw('DATE_FORMAT(transparencia.data, "%m/%Y")'), 'LIKE', "%{$date}"],
+				])
+			->orderBy('data', 'DESC')->paginate(10);      
 	}
 
 	public function userTransparencias($user, $municipio, $orgao)

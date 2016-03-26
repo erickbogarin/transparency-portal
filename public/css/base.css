@@ -1,0 +1,43 @@
+html {
+	font-size: medium;
+}
+
+body {
+	font: 100% 'Open Sans', sans-serif;
+}
+
+a {
+	text-decoration: none !important;
+}
+
+main {
+	padding: 0px 150px;	
+	background-image: url('../img/fundo.png');
+}
+
+.main {
+	background-color: #F9F9F9;
+}
+
+.content {
+	padding-left: 20px;
+	padding-top: 20px;
+	background: #FFF;
+}
+
+.content-paragrath {
+	line-height: 2;
+	margin: 40px auto;
+	font-size: 1em;
+}
+
+.content-cities {
+	margin-top: 20px;
+	margin-left: 0;
+}
+
+.ng-cloak { display: none !important; }
+
+.alert-text {
+	font-size: 12px;
+}

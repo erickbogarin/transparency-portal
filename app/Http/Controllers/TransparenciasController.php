@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use portal\Http\Requests;
 
-use DB;
+use portal\Services\TransparenciasService;
 
 class TransparenciasController extends Controller
 {
@@ -15,21 +15,9 @@ class TransparenciasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(TransparenciasService $transparenciasService, Request $request)
     {
-        $municipio = $request->get('municipio');
-        $orgao = $request->get('orgao');
-
-        $transparencias = DB::table('transparencia')
-            ->select('transparencia.nome', 'transparencia.data', 'transparencia.link')
-            ->join('municipio', 'transparencia.municipio_id', '=', 'municipio.id')
-            ->join('orgao', 'transparencia.orgao_id', '=', 'orgao.id')
-            ->where([
-                ['municipio.nome',$municipio],
-                ['orgao.nome',$orgao],
-            ])->paginate(5);      
-        
-        return response($transparencias);
+        return $transparenciasService->index($request);
     }
 
 }

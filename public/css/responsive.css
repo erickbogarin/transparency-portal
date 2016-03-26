@@ -1,0 +1,53 @@
+@media only screen and (max-width: 990px) {
+	#branding {
+		height: 9.38rem;
+	}
+	main {
+		padding: 0 1.2rem;
+		background-image: none;
+	}
+	header {
+		height: 10em;
+		position: relative;
+	}
+	header img {
+		position: absolute;
+		left: 0;
+		width: 50%;
+		height: 80%;
+	}
+	aside, #sidebar {
+		width: 100%;
+		position: fixed;
+		left: 0;
+		top: -100px;
+		border: 1px solid #d6d6c2;
+		background-color: #F9F9F9;
+		border-radius: 5px;
+	}
+	#navbar-collapse {
+		background-color: #444D4D;
+		border: 0;
+		border-radius: 50%;
+		box-shadow: 0 3px 5px rgba(0,0,0,.2);
+		outline: 0;
+		transition: box-shadow .5s,background-color .3s;
+		height: 50px;
+		width: 50px;
+		position: fixed;
+		bottom: 2vw;
+		right: 2vw;
+		z-index: 100;
+		line-height: 1;
+		text-align: center;
+		display: block;
+	}
+}
+
+@media only screen and (max-width: 800px) {
+	header img {
+		width: 100%;
+		height: 100%;
+		margin: 0;
+	}
+}

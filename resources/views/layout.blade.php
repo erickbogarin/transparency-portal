@@ -5,7 +5,13 @@
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<link rel="stylesheet" type="text/css" href="/css/base.css">
+	<link rel="stylesheet" type="text/css" href="/css/block/header.css">
+	<link rel="stylesheet" type="text/css" href="/css/block/footer.css">
+	<link rel="stylesheet" type="text/css" href="/css/block/nav.css">
+	<link rel="stylesheet" type="text/css" href="/css/block/table.css">
+	<link rel="stylesheet" type="text/css" href="/css/block/aside.css">
+	<link rel="stylesheet" type="text/css" href="/css/block/city.css">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 	<base href="/">
@@ -52,6 +58,8 @@
 <footer id="footer" role="contentinfo">
 	<img src="../img/topo.png" alt="Rodapé">
 </footer>
+
+<!--jQuery | Bootstrap -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <!-- Angular JS -->
@@ -62,8 +70,8 @@
 <script src="js/lib/ng-file-upload-shim.js"></script>
 <script src="js/lib/ng-file-upload.min.js"></script>
 <!--Portal -->
-<script src="js/lib/dirPagination.js"></script>
 <script src="js/main.js"></script>
+<script src="js/lib/dirPagination.js"></script>
 <script src="js/services/auth-service.js"></script>
 <script src="js/services/myServices.js"></script>
 <script src="js/helper/myHelper.js"></script>
