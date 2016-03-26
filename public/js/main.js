@@ -37,7 +37,7 @@ angular.module('ptm', ['directives', 'ui.router','satellizer', 'ngResource', 'an
             .state('orgao', {
                 url: '/{orgao}/{municipio}',
                 views: {
-                    '': {templateUrl: 'views/transparencia/index.html', controller: 'TransparenciasController'},
+                    '': {templateUrl: 'views/transparencia/home.html', controller: 'TransparenciasController'},
                     'sidebar@orgao': {templateUrl: 'views/layout/menu/tpMenu.html'}
                 }
             });

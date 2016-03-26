@@ -13,7 +13,7 @@ class UserController extends Controller
 
 	public function __construct()
 	{
-		$this->middleware('jwt.auth');
+		//$this->middleware('jwt.auth');
 	}
 
     /**
@@ -44,6 +44,12 @@ class UserController extends Controller
         $input = $request->all();
         $create = User::create($input);
         return response($create);
+    }
+
+    public function show($id) {
+        $user = User::find($id);
+        $dados = ['user'=>$user->name];
+        return $dados;
     }
 
     /**

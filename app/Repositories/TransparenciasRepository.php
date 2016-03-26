@@ -44,9 +44,10 @@ class TransparenciasRepository
 
 	public function transparenciasByType($municipio, $orgao, $type) 
 	{	
-		return Transparencia::select('transparencia.nome', 'transparencia.data', 'transparencia.link')
+		return Transparencia::select('transparencia.nome', 'transparencia.data', 'transparencia.link', 'tipo_transparencia.nome as tipo_nome')
             ->join('municipio', 'transparencia.municipio_id', '=', 'municipio.id')
             ->join('orgao', 'transparencia.orgao_id', '=', 'orgao.id')
+            ->join('tipo_transparencia', 'tipo_transparencia.id', '=', 'transparencia.tipo_id')
             ->where([
                 ['municipio.nome',$municipio],
                 ['orgao.nome',$orgao],
@@ -57,9 +58,10 @@ class TransparenciasRepository
 
 	public function transparenciasByTypeDate($municipio, $orgao, $type, $date) 
 	{	
-		return Transparencia::select('transparencia.nome', 'transparencia.data', 'transparencia.link')
+		return Transparencia::select('transparencia.nome', 'transparencia.data', 'transparencia.link', 'tipo_transparencia.nome as tipo_nome')
             ->join('municipio', 'transparencia.municipio_id', '=', 'municipio.id')
             ->join('orgao', 'transparencia.orgao_id', '=', 'orgao.id')
+            ->join('tipo_transparencia', 'tipo_transparencia.id', '=', 'transparencia.tipo_id')
             ->where([
                 ['municipio.nome',$municipio],
                 ['orgao.nome',$orgao],

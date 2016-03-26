@@ -1,14 +1,18 @@
 <aside id="sidebar" class="col-12-xs col-md-4 col-lg-4" role="complementary">
-	<button class="btn back" ui-sref="index">
-		<span class="glyphicon glyphicon-circle-arrow-left"></span> Página inicial
-	</button>
 	<div class="widget">	
 		<h1 class="widget-title">
 			Transparências
 		</h1>
+		<div class="checkbox" ng-if="filter.checkbox">
+			<label>
+				<input type="checkbox" ng-click="resetFilters()"> Limpar filtro
+			</label>
+		</div>
 		<nav class="nav navbar-default">
 			<ul class="nav nav-sidebar">
-				<li class="nav-sidebar-item" ng-repeat="tipo in types" ><a data-toggle="modal" data-target="#edit-data" ng-model="model.typeId" ng-change="searchDB()" >{{tipo.nome}}</a></li>
+				<li ui-sref-active="active" class="nav-sidebar-item" ng-repeat="tipo in types" >
+					<a  class="btn city-item" style="text-align: left" ng-click="setType(tipo.id)" href="#">{{tipo.nome}}</a>
+				</li>
 			</ul>
 		</nav>
 	</div>
