@@ -11,6 +11,11 @@ angular.module('ptm').controller('UserController', function(dataFactory, $scope,
     $scope.model = {
         searchText: ''
     };
+    $scope.form = {
+        name: '',
+        email: ''
+    };
+
 
     $scope.totalUsers = 0;
     $scope.pageChanged = function(newPage) {
@@ -71,12 +76,14 @@ angular.module('ptm').controller('UserController', function(dataFactory, $scope,
     }
 
     $scope.remove = function(user,index){
-        var result = confirm("Are you sure delete this user?");
-        if (result) {
+        $('#remove-data').modal().one('click', '#delete', function() {
             dataFactory.httpRequest('api/users/'+user.id,'DELETE').then(function(data) {
                 $scope.data.splice(index,1);
+                getResultsPage(1);
+
+                $(".modal").modal("hide");
             });
-        }
+        });
     }
 
     // This request will hit the index method in the AuthenticateController

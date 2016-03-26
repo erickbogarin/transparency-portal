@@ -13,7 +13,7 @@ class UserController extends Controller
 
 	public function __construct()
 	{
-		//$this->middleware('jwt.auth');
+		$this->middleware('jwt.auth');
 	}
 
     /**
@@ -61,7 +61,7 @@ class UserController extends Controller
     public function edit($id)
     {
 		$user = User::find($id);
-        return response($item);        
+        return response($user);        
     }
 
     /**

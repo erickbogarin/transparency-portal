@@ -23,8 +23,7 @@ angular.module('ptm', ['directives', 'ui.router','satellizer', 'ngResource', 'an
             .state('users', {
                 url: '/users',
                 views: {
-                    '': {templateUrl: 'views/admin/users.html', controller: 'UserController as user'},
-                    'sidebar@users': {templateUrl: 'views/layout/menu/mainMenu.html'}
+                    '': {templateUrl: 'views/admin/users.html', controller: 'UserController as user'}
                 }    
             })
             .state('transparencias', {
