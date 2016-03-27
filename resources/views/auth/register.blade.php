@@ -1,4 +1,4 @@
-@extends('layout.principal')
+@extends('layout')
 
 @section('content')
 <div class="container-fluid">

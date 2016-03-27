@@ -47,9 +47,7 @@ class UserController extends Controller
     }
 
     public function show($id) {
-        $user = User::find($id);
-        $dados = ['user'=>$user->name];
-        return $dados;
+        return  User::find($id);
     }
 
     /**

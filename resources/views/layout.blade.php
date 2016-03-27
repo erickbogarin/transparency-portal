@@ -51,8 +51,8 @@
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			<h4>Sua sessão expirou. Logue-se novamente.</h4>
 		</div>
+		@yield('content')
 		<div ui-view></div>
-
 	</div>
 </main>
 

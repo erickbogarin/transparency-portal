@@ -4,7 +4,7 @@ angular.module('ptm', ['directives', 'ui.router','satellizer', 'ngResource', 'an
 		
 		$authProvider.loginUrl = '/api/authenticate';
 
-		$urlRouterProvider.otherwise('/');
+		//$urlRouterProvider.otherwise('/');
 
 		$stateProvider
             .state('index', {
@@ -34,7 +34,7 @@ angular.module('ptm', ['directives', 'ui.router','satellizer', 'ngResource', 'an
                 }    
             })
             .state('orgao', {
-                url: '/{orgao}/{municipio}',
+                url: '/transparencias/{orgao}/{municipio}',
                 views: {
                     '': {templateUrl: 'views/transparencia/home.html', controller: 'TransparenciasController'},
                     'sidebar@orgao': {templateUrl: 'views/layout/menu/tpMenu.html'}

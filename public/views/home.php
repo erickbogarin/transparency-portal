@@ -25,11 +25,11 @@
 				<ul style="width: 100%;" class="dropdown-menu">
 					<li class="dropdown-header">Consultar transparência</li>
 					<li role="separator" class="divider"></li>
-					<li><a href="Prefeitura/{{value.nome}}">
+					<li><a href="transparencias/Prefeitura/{{value.nome}}">
 						<p><span class="glyphicon glyphicon-triangle-right"></span> Prefeitura</p>
 					</a></li>
 					<li role="separator" class="divider"></li>
-					<li><a href="Camara/{{value.nome}}">		
+					<li><a ui-sref="transparencias/Camara/{{value.nome}}">		
 						<p><span class="glyphicon glyphicon-triangle-right"></span> Camara</p>
 					</a></li>
 				</ul>

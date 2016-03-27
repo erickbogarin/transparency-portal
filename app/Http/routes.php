@@ -4,6 +4,13 @@ Route::get('/', function () {
     return view('layout');
 });
 
+Route::get('home', 'HomeController@index');
+
+Route::controllers([
+    'auth' => 'Auth\AuthController',
+    'password' => 'Auth\PasswordController',
+]);
+
 Route::group(['prefix' => 'api'], function()
 {
     /* api de autenticação*/  
