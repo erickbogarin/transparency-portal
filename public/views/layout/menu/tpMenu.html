@@ -3,15 +3,10 @@
 		<h1 class="widget-title">
 			Transparências
 		</h1>
-		<div class="checkbox" ng-if="filter.checkbox">
-			<label>
-				<input type="checkbox" ng-click="resetFilters()"> Limpar filtro
-			</label>
-		</div>
 		<nav class="nav navbar-default">
 			<ul class="nav nav-sidebar">
 				<li ui-sref-active="active" class="nav-sidebar-item" ng-repeat="tipo in types" >
-					<a  class="btn city-item" style="text-align: left" ng-click="setType(tipo.id)" href="#">{{tipo.nome}}</a>
+					<a  class="btn city-item" style="text-align: left" ng-click="setType(tipo.id)">{{tipo.nome}}</a>
 				</li>
 			</ul>
 		</nav>

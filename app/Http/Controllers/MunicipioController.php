@@ -8,14 +8,22 @@ use portal\Municipio;
 
 class MunicipioController extends Controller {
 
-	public function index(Request $request) {
+	public function index(Request $request) 
+    {
 		$input = $request->all();
-    	if($request->get('search')){
+    	if($request->get('search'))
+        {
     		$municipios = Municipio::where("nome", "LIKE", "%{$request->get('search')}%")
-    		->orderBy('nome', 'asc')->paginate(12);      
-    	}else{
+    		  ->orderBy('nome', 'asc')->paginate(12);      
+    	}else
+        {
     		$municipios = Municipio::orderBy('nome', 'asc')->paginate(12);
     	}
     	return response($municipios);
 	}
+
+    public function all() 
+    {
+        return Municipio::all();
+    }
 }

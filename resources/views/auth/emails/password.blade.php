@@ -1,3 +1,1 @@
-<!-- resources/views/emails/password.blade.php -->
-
-Click here to reset your password: <% url('password/reset/'.$token) %>
+Clique no endereço a seguir para redefinir sua senha: <a href="{{ $link = url('password/reset', $token).'?email='.urlencode($user->getEmailForPasswordReset()) }}"> {{ $link }} </a>

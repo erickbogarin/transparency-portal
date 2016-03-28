@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 
 use portal\Http\Requests;
 
+use portal\Transparencia;
+
+use Auth;
+
 use portal\Repositories\EmployerTransparenciaRepository;
 
 use portal\Services\EmployerTransparenciaService;
@@ -16,6 +20,7 @@ class EmployerTransparenciasController extends Controller
     private $employerTransparenciaRepository;
 
     public function __construct(EmployerTransparenciaRepository $employerTransparenciaRepository) {
+        $this->middleware('auth');
         $this->employerTransparenciaRepository = $employerTransparenciaRepository;
     }
 
@@ -37,8 +42,19 @@ class EmployerTransparenciasController extends Controller
      */
     public function store(Request $request)
     {
-        $input = $request->all();
-        return $this->employerTransparenciaRepository->store($input);
+        $transparencia = new Transparencia;
+        
+        $transparencia->nome = $request->nome;
+        $transparencia->data = $request->data;
+        $transparencia->link = $request->link;
+        $transparencia->tipo_id = $request->tipo_id;
+        $transparencia->usuario_id = Auth::user()->id;
+        $transparencia->municipio_id = Auth::user()->municipio_id;
+        $transparencia->orgao_id = Auth::user()->orgao_id;
+
+        $transparencia->save();
+
+        return response($transparencia);
     }
 
     /**

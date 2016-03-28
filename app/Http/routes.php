@@ -23,7 +23,11 @@ Route::group(['prefix' => 'api'], function()
     Route::resource('user-transparencias', 'EmployerTransparenciasController'); 
 
     /* api dos municipios */
-    Route::resource('municipios', 'MunicipioController'); 
+    Route::resource('municipios', 'MunicipioController');
+    Route::resource('municipios-all', 'MunicipioController@all');  
+
+    /* api dos orgãos */
+    Route::resource('orgaos', 'OrgaoController'); 
 
     /* api das transparencias */
     Route::resource('transparencias', 'TransparenciasController'); 
@@ -45,4 +49,7 @@ Route::any('{path?}', function()
 Blade::setContentTags('<%', '%>'); 
 Blade::setEscapedContentTags('<%%', '%%>'); 
 
-
+Route::group(['middleware' => 'web'], function () {
+    Route::auth();
+    Route::get('/home', 'HomeController@index');
+});

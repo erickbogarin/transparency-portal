@@ -22,9 +22,9 @@ class EmployerTransparenciaService
 	public function index($input) 
 	{
 		if ($input->has('date')) 
-			return $this->employerTransparenciaRepository->userDateTransparencias($input->user, $input->municipio, $input->orgao, $input->date);
+			return $this->employerTransparenciaRepository->userDateTransparencias($input->date);
 		else 
-			return $this->employerTransparenciaRepository->userTransparencias($input->user, $input->municipio, $input->orgao);
+			return $this->employerTransparenciaRepository->userTransparencias();
 	}
 
 	public function destroy($id) 

@@ -3,17 +3,18 @@
 namespace portal\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use portal\Http\Requests;
-
 use portal\User;
+use Hash;
+use Mail;
+use portal\Jobs\SendWelcomeEmail;
 
 class UserController extends Controller
 {
 
 	public function __construct()
 	{
-		$this->middleware('jwt.auth');
+//		$this->middleware('auth');
 	}
 
     /**
@@ -42,8 +43,15 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        $create = User::create($input);
-        return response($create);
+        $user = User::create($input);
+
+        //$this->dispatch(new SendWelcomeEmail($user));
+
+        $user->fill([
+            'password' => Hash::make($request->password)
+        ])->save();
+
+        return response($user);
     }
 
     public function show($id) {

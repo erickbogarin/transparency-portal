@@ -24,6 +24,7 @@
             <tr>
                 <th>Nome</th>
                 <th>E-mail</th>
+                <th>Conta</th>
                 <th></th>
             </tr>
         </thead>
@@ -31,6 +32,7 @@
             <tr class="ng-cloak" dir-paginate="value in data | itemsPerPage:5" total-items="totalUsers">
                 <td>{{value.name}}</td>
                 <td>{{value.email}}</td>
+                <td>{{value.conta}}</td>
                 <td class="table-item-action">
                     <button  data-toggle="modal" ng-click="edit(value.id)" data-target="#edit-data" type="button" class="btn btn-default" aria-label="Left Align">
                         <span class="text-info glyphicon glyphicon-pencil" aria-hidden="true"></span>
@@ -45,88 +47,136 @@
 
     <div class="text-center">
         <dir-pagination-controls on-page-change="pageChanged(newPageNumber)" template-url=" views/layout/dirPagination.html">
-        </dir-pagination-controls>
-    </div>
-    
-    <!-- Adicionar Modal-->
-    <div class="modal fade" id="create-user" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
+    </dir-pagination-controls>
+</div>
+
+<!-- Adicionar Modal-->
+<div class="modal fade" id="create-user" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Novo usuário</h4>
             </div>
-            <form method="POST" name="addItem" role="form" ng-submit="saveAdd()">
+            <form method="POST" name="addUser" role="form" ng-submit="saveAdd()">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="nomeInputName" class="control-label">Nome:</label>
-                        <input id="nomeInputName" ng-model="form.name" type="text" placeholder="Nome do novo usuário" name="nome" class="form-control" required />
+                        <label for="inputName" class="control-label">Nome:</label>
+                        <input id="inputName" ng-model="form.name" type="text" placeholder="Nome do novo usuário" name="name" class="form-control" required />
                     </div>
                     <div class="form-group">
-                        <label for="nomeInputEmail" class="control-label">E-Mail:</label>
-                        <input id="nomeInputEmail" ng-model="form.email" type="text" placeholder="E-Mail do novo usuário" name="nome" class="form-control" required />
+                        <label for="inputEmail" class="control-label">E-Mail:</label>
+                        <input id="inputEmail" ng-model="form.email" type="text" placeholder="E-Mail do novo usuário" name="email" class="form-control" required />
                     </div>
+                    <div class="form-group">
+                        <label for="conta" class="control-label">Conta:</label>
+                        <select id="conta" class="form-control" ng-model="form.conta" required>
+                            <option value="">Selecionar conta...</option>
+                            <option value="ADMIN">Administrador</option>
+                            <option value="EMPLOYER">Funcionário</option>
+                        </select>
+                    </div>
+                    <div ng-if="form.conta == 'EMPLOYER'">
+                        <div class="form-group">
+                            <label for="municipio" class="control-label">Município:</label>
+                            <select id="municipio" class="form-control" ng-model="form.municipio_id" required>
+                                <option value="">Selecionar município...</option>
+                                <option ng-repeat="municipio in municipios" value="{{municipio.id}}">{{municipio.nome}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="orgao" class="control-label">Orgão:</label>
+                            <select id="orgao" class="form-control" ng-model="form.orgao_id" required>
+                                <option value="">Selecionar orgão...</option>
+                                <option ng-repeat="orgao in orgaos" value="{{orgao.id}}">{{orgao.nome}}</option>
+                            </select>
+                        </div>
+                    </div>    
                 </div> 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" ng-disabled="addItem.$invalid" class="btn btn-primary">Salvar</button>
+                    <button type="submit" ng-disabled="addUser.$invalid" class="btn btn-primary">Salvar</button>
                 </div>
-                </form> 
-            </div>
-        </div>    
-    </div>
-    
-    <!-- Editar Modal -->
-    <div class="modal fade" id="edit-data" tabindex="-1" role="dialog" aria-labelledby="Label">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <form method="POST" name="editItem" role="form" ng-submit="saveEdit()">
-                    <input ng-model="form.id" type="hidden" placeholder="Name" name="name" class="form-control" />
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Editar usuário</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label class="control-label">Nome do usuário:</label>
-                            <input ng-model="form.name" type="text" placeholder="Name" name="nome" class="form-control" required />
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">E-Mail:</label>
-                            <input ng-model="form.email" type="text" placeholder="Name" name="nome" class="form-control" required />
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" ng-disabled="editItem.$invalid" class="btn btn-primary create-crud">Salvar</button>
-                    </div>
-                </div>
-                </form>
-            </div>
+            </form> 
         </div>
-    </div>
+    </div>    
+</div>
 
-    <!--Delete Modal-->
-    <div class="modal fade" id="remove-data" tabindex="-1" role="dialog" aria-labelledby="myLabel">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
+<!-- Editar Modal -->
+<div class="modal fade" id="edit-data" tabindex="-1" role="dialog" aria-labelledby="Label">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="POST" name="editItem" role="form" ng-submit="saveEdit()">
+                <input ng-model="form.id" type="hidden" placeholder="Name" name="name" class="form-control" />
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Remover usuário</h4>
+                    <h4 class="modal-title" id="myModalLabel">Editar usuário</h4>
                 </div>
                 <div class="modal-body">
-                     <p>quwe exluir memo?</p>
+                    <div class="form-group">
+                        <label class="control-label">Nome do usuário:</label>
+                        <input ng-model="form.name" type="text" placeholder="Name" name="nome" class="form-control" required />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">E-Mail:</label>
+                        <input ng-model="form.email" type="text" placeholder="Name" name="nome" class="form-control" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="conta" class="control-label">Conta:</label>
+                        <select id="conta" class="form-control" ng-model="form.conta" required>
+                            <option value="">Selecionar conta...</option>
+                            <option value="ADMIN">Administrador</option>
+                            <option value="EMPLOYER">Funcionário</option>
+                        </select>
+                    </div>
+                     <div ng-if="form.conta == 'EMPLOYER'">
+                        <div class="form-group">
+                            <label for="municipio" class="control-label">Município:</label>
+                            <select id="municipio" class="form-control" ng-model="form.municipio_id" required>
+                                <option value="">Selecionar município...</option>
+                                <option ng-repeat="municipio in municipios" value="{{municipio.id}}">{{municipio.nome}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="orgao" class="control-label">Orgão:</label>
+                            <select id="orgao" class="form-control" ng-model="form.orgao_id" required>
+                                <option value="">Selecionar orgão...</option>
+                                <option ng-repeat="orgao in orgaos" value="{{orgao.id}}">{{orgao.nome}}</option>
+                            </select>
+                        </div>
+                    </div>    
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button id="delete" type="button" class="btn btn-primary">Remover</button>
+                    <button type="submit" ng-disabled="editItem.$invalid" class="btn btn-primary create-crud">Salvar</button>
                 </div>
             </div>
+        </form>
+    </div>
+</div>
+</div>
+
+<!--Delete Modal-->
+<div class="modal fade" id="remove-data" tabindex="-1" role="dialog" aria-labelledby="myLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Remover usuário</h4>
+            </div>
+            <div class="modal-body">
+               <p>quwe exluir memo?</p>
+           </div>
+           <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            <button id="delete" type="button" class="btn btn-primary">Remover</button>
         </div>
     </div>
+</div>
+</div>
 
-    <div ng-controller="AuthController as auth" ng-if="user.error">
-        <div ng-init="auth.logout()"></div>
-    </div>
+<div ng-controller="AuthController as auth" ng-if="user.error">
+    <div ng-init="auth.logout()"></div>
+</div>
 </div>
 </div>

@@ -4,7 +4,7 @@ angular.module('ptm', ['directives', 'ui.router','satellizer', 'ngResource', 'an
 		
 		$authProvider.loginUrl = '/api/authenticate';
 
-		//$urlRouterProvider.otherwise('/');
+		$urlRouterProvider.otherwise('/');
 
 		$stateProvider
             .state('index', {
@@ -29,21 +29,21 @@ angular.module('ptm', ['directives', 'ui.router','satellizer', 'ngResource', 'an
             .state('transparencias', {
                 url: '/transparencias',
                 views: {
-                    '': {templateUrl: 'views/employee/home.html', controller: 'TransparenciaController'},
-                    'sidebar@transparencias': {templateUrl: 'views/layout/menu/tpMenu.html'}
+                '': {templateUrl: 'views/employee/home.html', controller: 'TransparenciaController'}
                 }    
             })
             .state('orgao', {
                 url: '/transparencias/{orgao}/{municipio}',
                 views: {
-                    '': {templateUrl: 'views/transparencia/home.html', controller: 'TransparenciasController'},
+                    '': {templateUrl: 'views/transparencia/home.php', controller: 'TransparenciasController'},
                     'sidebar@orgao': {templateUrl: 'views/layout/menu/tpMenu.html'}
                 }
             });
 
 		$locationProvider.html5Mode({
 			enabled: true,
-      		requireBase: false
+      		requireBase: false,
+            rewriteLinks: false
 		});
 	})
     .run(function($rootScope, $state, authenticate) {

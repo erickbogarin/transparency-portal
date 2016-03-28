@@ -40,7 +40,7 @@ angular.module('ptm').controller('MunicipiosController', function(dataFactory, $
     }
 
     $scope.searchDB = function() {
-        if($scope.model.searchText.length >= 3) {
+        if($scope.model.searchText.length >= 2) {
             if($.isEmptyObject($scope.libraryTemp)) {
                 $scope.libraryTemp = $scope.data;
                 $scope.totalCitiesTemp = $scope.totalCities;

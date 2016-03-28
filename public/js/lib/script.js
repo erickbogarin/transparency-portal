@@ -1,4 +1,4 @@
-$(window).on('load resize', function(){
+$(window).on('beforeprint load resize', function(){
 	var win = $(this);
 	if (win.width() < 970) { 
 

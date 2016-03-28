@@ -11,16 +11,7 @@ angular.module('ptm').controller('TransparenciaController', function(dataFactory
 		date: ''
 	};
 	
-	$scope.user = {
-		id: $rootScope.currentUser.id,
-		municipio_id: $rootScope.currentUser.municipio_id, 
-		orgao_id: $rootScope.currentUser.orgao_id
-	};
-	
 	$scope.form = {
-		usuario_id: $rootScope.currentUser.id,
-		municipio_id: $rootScope.currentUser.municipio_id,
-		orgao_id: $rootScope.currentUser.orgao_id,
 		nome: '',
 		link: '',
 		data: '',
@@ -57,8 +48,7 @@ angular.module('ptm').controller('TransparenciaController', function(dataFactory
 	getResultsPage(1);
 
 	function getResultsPage(pageNumber) {
-		var url = '/api/user-transparencias?user='+$scope.user.id+'&municipio='+$scope.user.municipio_id+
-			'&orgao='+$scope.user.orgao_id+'&page='+pageNumber;
+		var url = '/api/user-transparencias?page='+pageNumber;
 		if(! $.isEmptyObject($scope.libraryTemp)){
 			dataFactory.httpRequest(url+'&date='+$scope.search.date).then(function(data) {
 				$scope.data = data.data;
@@ -112,14 +102,14 @@ angular.module('ptm').controller('TransparenciaController', function(dataFactory
 		});	
 	}
 
-	var autoFillForm = function(fileName) {
+	var autoFillFormBeforeToSave = function(fileName) {
 		$scope.form.tipo_id = parseInt($scope.form.tipo_id);
 		$scope.form.data = formatDataPattern($scope.form.data);
 		$scope.form.link = clearStringFileName(fileName);
 	}
 
 	$scope.saveAdd = function(file) {	
-		autoFillForm(file.name);
+		autoFillFormBeforeToSave(file.name);
 		dataFactory.httpRequest('api/user-transparencias','POST',{},$scope.form).then(function(data) {
 			
 			$scope.data.push(data);

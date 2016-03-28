@@ -2,11 +2,10 @@
 
 <content>
 	<ol class="breadcrumb">
-		<li><a ui-sref="index">Página inicial</a></li>
+		<li><a ui-sref="index"><i class="fa fa-home"></i> Página inicial</a></li>
 		<li class="active">Consulta de transparências</li>
 	</ol>
-
-	<h1 class="text-muted">{{orgao}} de {{city}}</h1>
+	<h1 class="text-muted">{{orgao}} de {{municipio}}</h1>
 
 	<p class="content-paragrath text-justify">A Associação Amazonense dos Municípios – AAM, buscando sempre o aperfeiçoamento de sua plataforma de transparência municipal, apresenta aos usuários um novo Portal da Transparência dos Municípios do Amazonas.
 		Mais <em>moderno, intuitivo e com ferramentas de acessibilidade mais completas</em>, o Portal Transparência aprimorou seus sistemas de envio de infor	mação pelos gestores públicos, ampliando também a qualidade da interatividade do cidadão com a gestão dos recursos públicos.
@@ -16,7 +15,10 @@
 		<label>Pesquisar (mês / ano):</label>
 		<div class="input-group">
 			<input type="month" class="form-control ng-valid ng-dirty" placeholder="Search" ng-change="searchDB()" ng-model="filter.date" name="table_search" title="" tooltip="">
-			<span class="input-group-addon">Procurar</span>
+			<span ng-if="!filter.checkbox" class="input-group-addon">Procurar</span>
+			<span ng-if="filter.checkbox" ng-click="resetFilters()" class="input-group-addon btn btn-primary"><i class="fa fa-filter"></i> Limpar filtro</span>	
+
+		</div>
 		</div>
 	</div>
 
@@ -33,7 +35,7 @@
 			<tr class="ng-cloak" dir-paginate="value in data | itemsPerPage:5" total-items="totalTransparencias">
 				<td style="text-align:center">
 					<a href="/public/{{value.link}}" target='_blank' class="btn btn-default">
-						<span class="text-info glyphicon glyphicon-search" aria-hidden="true"></span>
+						<span class="text-info fa fa-search" aria-hidden="true"></span>
 					</a>					
 				</td>
 				<td>{{value.nome}}</td>

@@ -6,6 +6,8 @@ use portal\Transparencia;
 
 use DB;
 
+use Auth;
+
 class EmployerTransparenciaRepository
 {
 	
@@ -16,35 +18,35 @@ class EmployerTransparenciaRepository
 		$this->transparencia = $transparencia;
 	}
 
-	public function userDateTransparencias($user, $municipio, $orgao, $date)
+	public function userDateTransparencias($date)
 	{
 		return Transparencia::
 			select('transparencia.*', 'tipo_transparencia.nome as tipo_nome')
 			->leftJoin('tipo_transparencia', 'tipo_transparencia.id', '=', 'transparencia.tipo_id')
 			->where([
-				['usuario_id',$user],
-				['municipio_id',$municipio],
-				['orgao_id',$orgao],
+				['usuario_id', Auth::user()->id],
+				['municipio_id',Auth::user()->municipio_id],
+				['orgao_id',Auth::user()->orgao_id],
 				[DB::raw('DATE_FORMAT(transparencia.data, "%m/%Y")'), 'LIKE', "%{$date}"],
 				])
 			->orderBy('data', 'DESC')->paginate(10);      
 	}
 
-	public function userTransparencias($user, $municipio, $orgao)
+	public function userTransparencias()
 	{
 		return Transparencia::
-		select('transparencia.*', 'tipo_transparencia.nome as tipo_nome')
-		->join('tipo_transparencia', 'tipo_transparencia.id', '=', 'transparencia.tipo_id')
-		->where([
-			['usuario_id',$user],
-			['municipio_id',$municipio],
-			['orgao_id', $orgao],
-			])
-		->orderBy('data', 'DESC')->paginate(10);
+			select('transparencia.*', 'tipo_transparencia.nome as tipo_nome')
+			->join('tipo_transparencia', 'tipo_transparencia.id', '=', 'transparencia.tipo_id')
+			->where([
+				['usuario_id', Auth::user()->id],
+				['municipio_id',Auth::user()->municipio_id],
+				['orgao_id',Auth::user()->orgao_id],
+				])
+			->orderBy('data', 'DESC')->paginate(10);
 	}
 
 	public function store($input)
-	{	
+	{			
 		return Transparencia::create($input);
 	}
 

@@ -23,15 +23,17 @@
 				</h5>
 				</button>
 				<ul style="width: 100%;" class="dropdown-menu">
-					<li class="dropdown-header">Consultar transparência</li>
+					<li class="dropdown-header">Consultar transparências</li>
 					<li role="separator" class="divider"></li>
 					<li><a href="transparencias/Prefeitura/{{value.nome}}">
-						<p><span class="glyphicon glyphicon-triangle-right"></span> Prefeitura</p>
-					</a></li>
+							<i class="fa fa-university"></i> Prefeitura
+						</a>
+					</li>
 					<li role="separator" class="divider"></li>
-					<li><a ui-sref="transparencias/Camara/{{value.nome}}">		
-						<p><span class="glyphicon glyphicon-triangle-right"></span> Camara</p>
-					</a></li>
+					<li><a href="transparencias/Camara/{{value.nome}}">		
+							<i class="fa fa-building-o"></i> Camara
+						</a>
+					</li>
 				</ul>
 			</div>
 			<h4 class="alert alert-warning" ng-if="empty">Cidade não encontrada.</h4>

@@ -13,9 +13,26 @@ angular.module('ptm').controller('UserController', function(dataFactory, $scope,
     };
     $scope.form = {
         name: '',
-        email: ''
+        email: '',
+        password: '', 
+        conta: '',
+        municipio_id: null,
+        orgao_id: null
     };
 
+    $scope.municipios = $http.get('api/municipios-all')
+    .success(function(municipios) {
+        $scope.municipios = municipios;
+    }).error(function(error) {
+        console.log(error);
+    }); 
+
+    $scope.orgaos = $http.get('api/orgaos')
+    .success(function(orgaos) {
+        $scope.orgaos = orgaos;
+    }).error(function(error) {
+        console.log(error);
+    }); 
 
     $scope.totalUsers = 0;
     $scope.pageChanged = function(newPage) {
@@ -55,6 +72,8 @@ angular.module('ptm').controller('UserController', function(dataFactory, $scope,
     }
 
     $scope.saveAdd = function(){
+        $scope.form.password = randomString(6);
+        console.log($scope.form.password);
         dataFactory.httpRequest('api/users','POST',{},$scope.form).then(function(data) {
           $scope.data.push(data);
           $(".modal").modal("hide");

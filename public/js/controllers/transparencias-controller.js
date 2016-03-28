@@ -3,7 +3,7 @@ angular.module('ptm').controller('TransparenciasController', function(dataFactor
 	$scope.data = [];
 	$scope.libraryTemp = {};
 	$scope.totalTransparenciasTemp = {};
-	$scope.city = $stateParams.municipio;
+	$scope.municipio = $stateParams.municipio;
 	$scope.orgao = $stateParams.orgao;
 	$scope.filter = {
 		checkbox: false,
