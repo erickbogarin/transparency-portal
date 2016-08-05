@@ -1,13 +1,20 @@
-
-#branding {
-	background-image: url('../../img/topo.png');
-	height: 168px;
-	background-repeat: no-repeat;
+header {
+	font-family: 'Varela Round', sans-serif;
+	border-top: 4px solid #3c763d;
 }
 
-header img {
-	width: 400px;
-	height: 134.563px;
-	margin-top: 15px;
-	margin-left: 170px;
+.navbar-brand {
+	vertical-align: middle;
+}
+
+.navbar-brand b {
+	color: #444D4D;
+}
+
+#flag {
+	border: 1px solid #719f72;
+	background: url("/img/flag-am.png") no-repeat;
+	width: 32px;
+	height: 20px;
+	vertical-align: middle;
 }

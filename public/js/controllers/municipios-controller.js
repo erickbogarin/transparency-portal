@@ -1,6 +1,6 @@
 angular.module('ptm').controller('MunicipiosController', function(dataFactory, $scope, $http) {
-
-	$scope.data = [];
+    
+    $scope.data = [];
     $scope.libraryTemp = {};
     $scope.totalCitiesTemp = {};
     $scope.model = {

@@ -34,6 +34,7 @@ Route::group(['prefix' => 'api'], function()
     Route::resource('tipos-transparencias', 'TipoTransparenciaController');
 });
 
+/* static content path */
 Route::group(['prefix' => 'public'], function()
 {
     Route::resource('/upload', 'FileController@store');

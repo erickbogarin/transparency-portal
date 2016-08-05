@@ -1,16 +1,15 @@
 footer {
-	position: absolute;
-	
-	-moz-transform: scaleX(-1);
-	-o-transform: scaleX(-1);
-	-webkit-transform: scaleX(-1);
-	transform: scaleX(-1);
-	filter: FlipH;
-	-ms-filter: "FlipH";
+	background-color: #2e3436;
+	padding: 2em 0;
+	height: 100px;
+	color: #dff0d8;
+	vertical-align: middle;
 }
 
-footer img {
-	background-repeat: no-repeat;
-	height: 80px;
-	width: 100%;
+#brasao {
+	background: url("/img/brasao-am.png") no-repeat;
+	width: 15px;
+	height: 20px;
+	margin-top: -3px;
+	vertical-align: middle;
 }

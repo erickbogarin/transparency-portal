@@ -38,8 +38,8 @@ angular.module('ptm').controller('TransparenciasController', function(dataFactor
 
 	var checkUrlFilterParams = function() {
 		var url;
-		if($scope.filter.date) 
-			url =  '&date=' + convertToLocaleDate($scope.filter.date);
+		if($scope.filter.date)
+			url =  '&date=' + $scope.filter.date;/*convertToLocaleDate($scope.filter.date);*/
 		if($scope.filter.type)
 			 url = url + '&type=' + $scope.filter.type;
 		return url;	 	 
