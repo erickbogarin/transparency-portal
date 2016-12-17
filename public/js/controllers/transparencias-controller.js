@@ -1,4 +1,5 @@
-angular.module('ptm').controller('TransparenciasController', function(dataFactory, $scope, $http, $stateParams) {
+
+function TransparenciasController(dataFactory, $scope, $http, $stateParams) {
 
 	$scope.data = [];
 	$scope.libraryTemp = {};
@@ -86,4 +87,6 @@ angular.module('ptm').controller('TransparenciasController', function(dataFactor
 		checkEmptyTransparencia();
 	}
 
-}); 
+};
+
+module.exports = TransparenciasController;

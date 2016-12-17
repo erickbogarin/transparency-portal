@@ -1,6 +1,4 @@
-angular.module('ptm', ['directives', 'ui.router','satellizer', 'ngResource', 'angularUtils.directives.dirPagination', 
-    'ngFileUpload', 'myServices'])
-	.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+function App($stateProvider, $urlRouterProvider, $locationProvider) {
         
 		$urlRouterProvider.otherwise('/');
 		$stateProvider
@@ -15,13 +13,13 @@ angular.module('ptm', ['directives', 'ui.router','satellizer', 'ngResource', 'an
                 url: '/users',
                 views: {
                     '': {templateUrl: 'views/admin/users.html', controller: 'UserController as user'}
-                }    
+                }
             })
             .state('transparencias', {
                 url: '/transparencias',
                 views: {
                 '': {templateUrl: 'views/employee/home.html', controller: 'TransparenciaController'}
-                }    
+                }
             })
             .state('orgao', {
                 url: '/transparencias/{orgao}/{municipio}',
@@ -36,4 +34,6 @@ angular.module('ptm', ['directives', 'ui.router','satellizer', 'ngResource', 'an
       		requireBase: false,
             rewriteLinks: false
 		});
-	});
+	};
+
+module.exports = App;

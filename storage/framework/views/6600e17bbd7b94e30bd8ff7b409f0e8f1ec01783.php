@@ -33,25 +33,25 @@
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				@if(auth()->check())
+				<?php if(auth()->check()): ?>
 					<ul class="nav navbar-nav">
-						@if(auth()->user()->conta == 'ADMIN')
+						<?php if(auth()->user()->conta == 'ADMIN'): ?>
 							<li ui-sref-active="active"><a ui-sref="users">Usuários</a></li>
-						@endif
-						@if(auth()->user()->conta == 'EMPLOYER')
-							<li ui-sref-active="active"><a ui-sref="transparencias"><% auth()->user()->municipio->nome %></a></li>
-						@endif
+						<?php endif; ?>
+						<?php if(auth()->user()->conta == 'EMPLOYER'): ?>
+							<li ui-sref-active="active"><a ui-sref="transparencias"><?php echo e(auth()->user()->municipio->nome); ?></a></li>
+						<?php endif; ?>
 
 							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><% auth()->user()->name %> <span class="caret"></span></a>
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><?php echo e(auth()->user()->name); ?> <span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
-									<li><a href="<% url('/home') %>"><i class="fa fa-user"></i> Conta</a></li>
-									<li><a href="<% url('/auth/logout') %>"><i class="fa fa-sign-out"></i> Sair</a></li>
+									<li><a href="<?php echo e(url('/home')); ?>"><i class="fa fa-user"></i> Conta</a></li>
+									<li><a href="<?php echo e(url('/auth/logout')); ?>"><i class="fa fa-sign-out"></i> Sair</a></li>
 								</ul>
 							</li>
 
 					</ul>
-				@endif
+				<?php endif; ?>
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="#">Perguntas frequentes</a></li>
 					<li><a href="#">Contato</a></li>
@@ -70,7 +70,7 @@
 	</button>
 	<div class="se-pre-con"></div>
 	<div class="main row">
-		@yield('content')
+		<?php echo $__env->yieldContent('content'); ?>
 		<div ui-view></div>
 	</div>
 </main>

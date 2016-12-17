@@ -12,7 +12,7 @@ class OrgaoTableSeeder extends Seeder
      */
     public function run()
     {
-        Orgao::insert(['nome' => 'prefeitura');       
-        Orgao::insert(['nome' => 'camara');
+        Orgao::create(['nome' => 'prefeitura']);
+        Orgao::create(['nome' => 'camara']);
     }
 }

@@ -1,5 +1,4 @@
-angular.module('myServices', [])
-	.factory('dataFactory', function($http) {
+function dataFactory($http) {
 		var myService = {
 			httpRequest: function(url,method,params,dataPost,upload) {
 				var passParameters = {};
@@ -53,5 +52,6 @@ angular.module('myServices', [])
 			}
 		};
 		return myService;
-	});
+	};
 
+	module.exports = dataFactory;

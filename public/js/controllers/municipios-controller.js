@@ -1,4 +1,7 @@
-angular.module('ptm').controller('MunicipiosController', function(dataFactory, $scope, $http) {
+'use strict';
+
+MunicipiosController.$inject = ['dataFactory', '$scope', '$http'];
+function MunicipiosController(dataFactory, $scope, $http) {
     
     $scope.data = [];
     $scope.libraryTemp = {};
@@ -57,4 +60,6 @@ angular.module('ptm').controller('MunicipiosController', function(dataFactory, $
         checkEmptyCity();
     }
 
-});
+};
+
+module.exports = MunicipiosController;

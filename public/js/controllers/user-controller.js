@@ -1,4 +1,5 @@
-angular.module('ptm').controller('UserController', function(dataFactory, $scope, $http) {    
+
+function UserController(dataFactory, $scope, $http) {
 
     var vm = this;
     vm.error;
@@ -113,4 +114,6 @@ angular.module('ptm').controller('UserController', function(dataFactory, $scope,
         vm.error = error;
     });
 
-});
+};
+
+module.exports = UserController;

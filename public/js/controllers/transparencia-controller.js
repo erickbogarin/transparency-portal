@@ -1,4 +1,5 @@
-angular.module('ptm').controller('TransparenciaController', function(dataFactory, Upload, $scope, $rootScope, $http) {
+
+function TransparenciaController(dataFactory, Upload, $scope, $rootScope, $http) {
 
 	$scope.data = [];
 	$scope.libraryTemp = {};
@@ -157,4 +158,6 @@ angular.module('ptm').controller('TransparenciaController', function(dataFactory
 		resetForm();
 	});
 
-});	
+};
+
+module.exports = TransparenciaController;
